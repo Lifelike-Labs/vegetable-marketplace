@@ -5,3 +5,6 @@ node_modules
 
 # next.js build output
 .next
+
+# Ignore Jetbrains IDE config
+.idea
