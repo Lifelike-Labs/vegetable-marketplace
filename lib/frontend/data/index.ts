@@ -1,4 +1,6 @@
 import { Listing } from '.prisma/client'
+import { Order } from '@prisma/client'
+import { useState } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
 import { creater, fetcher } from './helpers'
 
@@ -40,4 +42,22 @@ export function useCreateListing() {
     return response
   }
   return { createListing }
+}
+
+export function useCreateOrder() {
+  const [isLoading, setIsLoading] = useState(false);
+  const createOrder = async (listingId: string): Promise<Order | null> => {
+    setIsLoading(true);
+    const body = { listingId }
+    try {
+      const response = await creater<Order>('/api/orders/', body)
+
+      return response
+    } catch(e) {
+      return null
+    } finally {
+      setIsLoading(false)
+    }
+  }
+  return { createOrder, isLoading }
 }
