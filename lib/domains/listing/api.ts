@@ -19,3 +19,10 @@ export const listMyListings = async (userId: string): Promise<Listing[]> => {
   })
   return listings
 }
+
+export const getListingById = async (id: string): Promise<Listing | null> => {
+  const listing = await prisma.listing.findFirst({
+    where: {id}
+  })
+  return listing
+}
