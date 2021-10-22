@@ -7,6 +7,7 @@ export default withApiAuthRequired(async function handle(req, res) {
   const session = getSession(req, res)
   const userId = getUserIdFromSession(session)
   if (!userId) {
+    // TODO: IMPORTANT - Do we need to call .end() ?
     res.status(401).end
     return
   }

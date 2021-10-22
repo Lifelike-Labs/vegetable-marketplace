@@ -6,6 +6,7 @@ interface Props {
   error?: Error
 }
 
+// TODO: Rename to `ErrorHandler` - typo
 export default function ErrorHanlder({
   error = new Error('Unexpected error. Try refreshing the page.'),
 }: Props) {

@@ -4,6 +4,7 @@ import ErrorHandler from './ErrorHandler'
 import { NextLinkComposed } from './Link'
 import Loader from './Loader'
 
+// TODO: Fix typo - component name should be `AuthButton`
 const AuthButon = () => {
   const { user, error, isLoading } = useUser()
   if (isLoading) return <Loader />

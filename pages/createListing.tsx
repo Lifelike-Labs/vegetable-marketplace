@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { NextLinkComposed } from '../components/common/Link'
 import { useCreateListing } from '../lib/frontend/data'
 
+// TODO: Rename this component to `CreateListing` -- shouldn't be named `Dashboard`
 const Dashboard: NextPage = () => {
   const { createListing } = useCreateListing()
   const { enqueueSnackbar } = useSnackbar()

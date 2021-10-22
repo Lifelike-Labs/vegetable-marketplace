@@ -2,6 +2,15 @@ import { Listing } from '.prisma/client'
 import useSWR, { useSWRConfig } from 'swr'
 import { creater, fetcher } from './helpers'
 
+export function useListing(listingId: string) {
+  const { data, error } = useSWR<Listing, Error>(`/api/listings/${listingId}`, fetcher)
+  return {
+    listing: data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
 export function useListings() {
   const { data, error } = useSWR<Listing[], Error>(`/api/listings`, fetcher)
   return {
