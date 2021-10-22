@@ -5,31 +5,22 @@ import { useRouter } from "next/router"
 import React, { useCallback, useState } from "react"
 import ErrorHandler from "../../components/common/ErrorHandler"
 import Loader from "../../components/common/Loader"
+import { OrderDialog } from "../../components/order/OrderDialog"
 import { useCreateOrder, useListing } from "../../lib/frontend/data"
 
 const ListingIdPage: NextPage = () => {
     const router = useRouter();
     const { listing, isLoading, isError } = useListing(router.query.id as string)
-    const { createOrder, isLoading: isCreateOrderLoading } = useCreateOrder()
-    const [isLastOrderSuccessful, setIsLastOrderSuccessful] = useState(false)
+    const [isOrderDialogOpen, setIsOrderDialogOpen] = useState(false)
 
-    const handleClick = useCallback(async () => {
-        if (!listing) return;
-        
-        const createOrderResult = await createOrder(listing.id)
-
-        if (!createOrderResult) return;
-
-        setIsLastOrderSuccessful(true);
-
-        setTimeout(() => {
-            setIsLastOrderSuccessful(false)
-        }, 2000)
-    }, [createOrder, listing])
+    const handleClick = useCallback(() => setIsOrderDialogOpen(true), [])
+    
+    const handleOrderDialogClose = useCallback(() => setIsOrderDialogOpen(false), [])
 
   if (isLoading) return <Loader />
   if (isError || !listing) return <ErrorHandler error={isError} />
   return (
+    <>
     <Box m={4}>
       <Typography variant="h3" gutterBottom>
         {listing.title}
@@ -40,10 +31,12 @@ const ListingIdPage: NextPage = () => {
       <Typography variant="body1" gutterBottom>
         {listing.description}
       </Typography>
-      <Button variant="contained" onClick={handleClick} disabled={isCreateOrderLoading || isLastOrderSuccessful}>
-        {isLastOrderSuccessful ? 'Order Complete!' : isCreateOrderLoading ? 'Ordering...' : 'Order'}
+      <Button variant="contained" onClick={handleClick}>
+        Order
       </Button>
     </Box>
+    <OrderDialog isOpen={isOrderDialogOpen} listing={listing} onClose={handleOrderDialogClose} />
+    </>
   )
 }
 
