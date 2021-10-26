@@ -2,12 +2,14 @@ import { Listing } from '.prisma/client'
 import useSWR, { useSWRConfig } from 'swr'
 import { creater, fetcher } from './helpers'
 
-export function useListing(listingId: string) {
-  const { data, error } = useSWR<Listing, Error>(`/api/listings/${listingId}`, fetcher)
+export function useListing(listingId: string|null) {
+  // SWR conditional fetching - see https://swr.vercel.app/docs/conditional-fetching
+  // This allows us to gracefully handle cases in next.js (like clientside 1st render before route exists)
+  // where this code may be called but listingId does not yet exist.
+  const { data, error } = useSWR<Listing, Error>(listingId ? `/api/listings/${listingId}` : null, fetcher)
   return {
-    listing: data,
-    isLoading: !error && !data,
-    isError: error,
+    data,
+    error,
   }
 }
 
