@@ -1,5 +1,5 @@
 import { Listing } from '.prisma/client'
-import {Button, Card, Typography} from '@mui/material'
+import { Card, CardActionArea, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import {NextLinkComposed} from "../common/Link";
 
@@ -14,15 +14,15 @@ interface Props {
 export default function ListingCard({ listing }: Props) {
   console.log(listing)
   return (
-    <Card>
-      <Box p={2}>
-      <Button variant="text" color="inherit" component={NextLinkComposed} to={`/listing/${listing.id}`} >
-          Listing details for listing id {listing.id}
-      </Button>
-        <Typography variant="h6">{listing.title}</Typography>
-        <Typography variant="body1">{listing.description}</Typography>
-        <Typography variant="body1">{listing.priceInCentsPerUnit}</Typography>
-      </Box>
-    </Card>
+      <Card>
+          <CardActionArea component={NextLinkComposed} to={`/listing/${listing.id}`} >
+              <Box p={2}>
+                  Listing details for listing id {listing.id}
+                  <Typography variant="h6">{listing.title}</Typography>
+                  <Typography variant="body1">{listing.description}</Typography>
+                  <Typography variant="body1">{listing.priceInCentsPerUnit}</Typography>
+              </Box>
+          </CardActionArea>
+      </Card>
   )
 }
