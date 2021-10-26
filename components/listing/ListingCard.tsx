@@ -17,7 +17,6 @@ export default function ListingCard({ listing }: Props) {
       <Card>
           <CardActionArea component={NextLinkComposed} to={`/listing/${listing.id}`} >
               <Box p={2}>
-                  Listing details for listing id {listing.id}
                   <Typography variant="h6">{listing.title}</Typography>
                   <Typography variant="body1">{listing.description}</Typography>
                   <Typography variant="body1">{listing.priceInCentsPerUnit}</Typography>
