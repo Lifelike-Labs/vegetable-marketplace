@@ -1,11 +1,7 @@
 import { Listing } from '.prisma/client'
 import useSWR, { useSWRConfig } from 'swr'
 import { creater, fetcher } from './helpers'
-import createUseDataHook, { ResourceRequest } from "./createUseDataHook";
-
-const ListingResource: ResourceRequest<Listing> = {
-  getAPIRoute: listingId => listingId ? `/api/listings/${listingId}` : null,
-}
+import createUseDataHook, { PageAPIView } from "./createUseDataHook";
 
 export const useListing = createUseDataHook(ListingResource)
 

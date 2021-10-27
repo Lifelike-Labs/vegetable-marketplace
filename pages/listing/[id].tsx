@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
-import { Button, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { Box } from '@mui/system'
 import type { NextPage } from 'next'
 import ListingCard from "../../components/listing/ListingCard";
 import { useListing } from "../../lib/frontend/data";
-import Loader from "../../components/common/Loader";
-import ErrorHandler from "../../components/common/ErrorHandler";
+import ShowLoadingErrorMessages from "../../components/common/ShowLoadingErrorMessages";
 
 const Listing: NextPage = () => {
     const router = useRouter()
@@ -16,19 +13,14 @@ const Listing: NextPage = () => {
     const id  = router.query.id as string | null
     const { data, error } = useListing(id)
 
-    // isLoading state
-    if (!data && !error) return <Loader />
-
-    // Error states
-    if (error) return <ErrorHandler error={error} />
-
-    // We need this to make Typescript happy so that it knows the listing data exists before rendering <ListingCard/>
-    if (!data) return <Loader />
-
+    console.log('pathname ', router.pathname)
+    console.log('query ', router.query)
     return (
-        <Box m={4}>
-            <ListingCard listing={data} />
-        </Box>
+        <ShowLoadingErrorMessages hasData={!!data} error={error} >
+            <Box m={4}>
+                <ListingCard listing={data} />
+            </Box>
+        </ShowLoadingErrorMessages>
     )
 }
 
