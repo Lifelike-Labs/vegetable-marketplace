@@ -16,8 +16,6 @@ export const attachUserIdToSession = (user: User, session: Session): Session => 
 }
 
 export function sendErrorResponseIfNotLoggedIn(req: NextApiRequest, res: NextApiResponse<any>) {
-  // NOTE: User account Auth logic here is the same as in pages/api/listings/index.ts
-  // If we use it somewhere a third time we should consider consolidating it.
   const session = getSession(req, res)
   const userId = getUserIdFromSession(session)
   if (!userId) {
