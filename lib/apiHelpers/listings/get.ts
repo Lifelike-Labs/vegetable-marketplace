@@ -1,22 +1,21 @@
 import { Listing } from '.prisma/client'
-import {getListingById, listListings, listMyListings} from '../../domains/listing/api'
+import { getListingById, listListings, listMyListings } from '../../domains/listing/api'
 
-export async function handleGetListings(userId: string, query: {
+interface Query {
   [key: string]: string | string[]
-}): Promise<Listing[]> {
-  let listings: Listing[]
-  if (query.myListings) {
-    listings = await listMyListings(userId)
-  } else {
-    listings = await listListings()
-  }
-  return listings
 }
 
-export async function handleGetListingById(listingId: string, query: {
-  [key: string]: string | string[]
-}): Promise<Listing|null> {
-  let listing: Listing|null
-  listing = await getListingById(listingId)
-  return listing
+export async function handleGetListings(userId: string, query: Query): Promise<Listing[]> {
+  if (query.myListings) {
+    return await listMyListings(userId)
+  }
+
+  return await listListings()
+}
+
+export async function handleGetListingById(
+  listingId: string,
+  query: Query,
+): Promise<Listing | null> {
+  return await getListingById(listingId)
 }
