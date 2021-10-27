@@ -1,5 +1,6 @@
 import { User } from '.prisma/client'
-import { Session } from '@auth0/nextjs-auth0'
+import { getSession, Session } from '@auth0/nextjs-auth0'
+import { NextApiRequest, NextApiResponse } from "next";
 
 export const getUserIdFromSession = (session: Session | null | undefined): string | undefined => {
   const userId = session?.user?.userId
@@ -12,4 +13,15 @@ export const getUserIdFromSession = (session: Session | null | undefined): strin
 export const attachUserIdToSession = (user: User, session: Session): Session => {
   session.user.userId = user.id
   return session
+}
+
+export function sendErrorResponseIfNotLoggedIn(req: NextApiRequest, res: NextApiResponse<any>) {
+  // NOTE: User account Auth logic here is the same as in pages/api/listings/index.ts
+  // If we use it somewhere a third time we should consider consolidating it.
+  const session = getSession(req, res)
+  const userId = getUserIdFromSession(session)
+  if (!userId) {
+    res.status(401).end()
+    return
+  }
 }

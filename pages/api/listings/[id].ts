@@ -1,16 +1,9 @@
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { withApiAuthRequired } from '@auth0/nextjs-auth0'
 import { handleGetListingById } from '../../../lib/apiHelpers/listings/get'
-import { getUserIdFromSession } from '../../../lib/domains/user/helpers'
+import { sendErrorResponseIfNotLoggedIn } from '../../../lib/domains/user/helpers'
 
 export default withApiAuthRequired(async function handle(req, res) {
-    // NOTE: User account Auth logic here is the same as in pages/api/listings/index.ts
-    // If we use it somewhere a third time we should consider consolidating it.
-    const session = getSession(req, res)
-    const userId = getUserIdFromSession(session)
-    if (!userId) {
-        res.status(401).end()
-        return
-    }
+    sendErrorResponseIfNotLoggedIn(req, res);
 
     const { method, query } = req
     // casting this should be safe as a string;
