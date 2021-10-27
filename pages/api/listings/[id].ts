@@ -13,7 +13,7 @@ export default withApiAuthRequired(async function handle(req, res) {
     }
 
     const { method, query } = req
-    // casting this should be safe as `id` is from the route - `/listings/:id`
+    // casting this should be safe as a string;
     const listingId = query.id as string;
 
     if (!listingId) {

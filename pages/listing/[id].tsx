@@ -6,7 +6,7 @@ import type { NextPage } from 'next'
 import ListingCard from "../../components/listing/ListingCard";
 import { useListing } from "../../lib/frontend/data";
 import Loader from "../../components/common/Loader";
-import ErrorHanlder from "../../components/common/ErrorHandler";
+import ErrorHandler from "../../components/common/ErrorHandler";
 
 const Listing: NextPage = () => {
     const router = useRouter()
@@ -20,7 +20,7 @@ const Listing: NextPage = () => {
     if (!data && !error) return <Loader />
 
     // Error states
-    if (error) return <ErrorHanlder error={error} />
+    if (error) return <ErrorHandler error={error} />
 
     // We need this to make Typescript happy so that it knows the listing data exists before rendering <ListingCard/>
     if (!data) return <Loader />

@@ -1,7 +1,7 @@
 import { Button, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import type { NextPage } from 'next'
-import ErrorHanlder from '../components/common/ErrorHandler'
+import ErrorHandler from '../components/common/ErrorHandler'
 import { NextLinkComposed } from '../components/common/Link'
 import Loader from '../components/common/Loader'
 import ListingList from '../components/listing/ListingList'
@@ -10,7 +10,7 @@ import { useMyListings } from '../lib/frontend/data'
 const Dashboard: NextPage = () => {
   const { myListings, isLoading, isError } = useMyListings()
   if (isLoading) return <Loader />
-  if (isError) return <ErrorHanlder error={isError} />
+  if (isError) return <ErrorHandler error={isError} />
   return (
     <Box m={4}>
       <Typography variant="h3" gutterBottom>
