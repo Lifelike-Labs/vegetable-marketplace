@@ -9,6 +9,11 @@ export const getUserIdFromSession = (session: Session | null | undefined): strin
   } else return undefined
 }
 
+export const getUserId = (req: NextApiRequest , res: NextApiResponse) => {
+  const session = getSession(req, res)
+  return getUserIdFromSession(session)
+}
+
 
 export const attachUserIdToSession = (user: User, session: Session): Session => {
   session.user.userId = user.id
