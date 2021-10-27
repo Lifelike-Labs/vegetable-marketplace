@@ -5,13 +5,15 @@ import ErrorHandler from '../components/common/ErrorHandler'
 import { NextLinkComposed } from '../components/common/Link'
 import Loader from '../components/common/Loader'
 import ListingList from '../components/listing/ListingList'
-import { useMyListings } from '../lib/frontend/data'
+import { useListings, useMyListings } from '../lib/frontend/data'
 
 const Dashboard: NextPage = () => {
-  const { myListings, isLoading, isError } = useMyListings()
-  if (isLoading) return <Loader />
-  if (isError) return <ErrorHandler error={isError} />
-  return (
+    const { data, error } = useMyListings()
+    if (!data && !error) return <Loader />
+    if (error) return <ErrorHandler error={error} />
+    if (!data) return <Loader />
+
+    return (
     <Box m={4}>
       <Typography variant="h3" gutterBottom>
         My Dashboard
@@ -19,7 +21,7 @@ const Dashboard: NextPage = () => {
       <Typography variant="h6" gutterBottom>
         My listings
       </Typography>
-      <ListingList listings={myListings} />
+      <ListingList listings={data} />
       <Button sx={{ my: 4 }} component={NextLinkComposed} to={'/createListing'} variant="contained">
         Create new listing
       </Button>

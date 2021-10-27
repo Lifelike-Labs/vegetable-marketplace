@@ -7,15 +7,17 @@ import ListingList from '../components/listing/ListingList'
 import { useListings } from '../lib/frontend/data'
 
 const Home: NextPage = () => {
-  const { listings, isLoading, isError } = useListings()
-  if (isLoading) return <Loader />
-  if (isError) return <ErrorHandler error={isError} />
+  const { data, error } = useListings()
+  if (!data && !error) return <Loader />
+  if (error) return <ErrorHandler error={error} />
+  if (!data) return <Loader />
+
   return (
     <Box m={4}>
       <Typography variant="h3" gutterBottom>
         Available Veggies
       </Typography>
-      <ListingList listings={listings} />
+      <ListingList listings={data} />
     </Box>
   )
 }

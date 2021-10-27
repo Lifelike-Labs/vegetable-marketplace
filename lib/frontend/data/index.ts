@@ -16,18 +16,16 @@ export function useListing(listingId: string|null) {
 export function useListings() {
   const { data, error } = useSWR<Listing[], Error>(`/api/listings`, fetcher)
   return {
-    listings: data,
-    isLoading: !error && !data,
-    isError: error,
+    data,
+    error,
   }
 }
 
 export function useMyListings() {
   const { data, error } = useSWR<Listing[], Error>(`/api/listings?myListings=true`, fetcher)
   return {
-    myListings: data,
-    isLoading: !error && !data,
-    isError: error,
+    data,
+    error,
   }
 }
 
