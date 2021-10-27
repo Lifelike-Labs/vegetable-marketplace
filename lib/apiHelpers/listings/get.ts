@@ -13,9 +13,6 @@ export async function handleGetListings(userId: string, query: Query): Promise<L
   return await listListings()
 }
 
-export async function handleGetListingById(
-  listingId: string,
-  query: Query,
-): Promise<Listing | null> {
-  return await getListingById(listingId)
+export async function handleGetListingById(id: string, query: Query): Promise<Listing | null> {
+  return await getListingById(id)
 }
