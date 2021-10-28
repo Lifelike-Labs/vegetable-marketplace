@@ -11,15 +11,15 @@ interface Props {
 // Coming from where we attempt to display listing.priceInCentsPerUnit.
 // Currently priceInCentsPerUnit doesn't exist in the schema.
 
-export default function ListingCard({ data }: Props) {
-  console.log(data)
+export default function ListingCard({ data: listing }: Props) {
+  console.log(listing)
   return (
       <Card>
-          <CardActionArea component={NextLinkComposed} to={`/listing/${data.id}`} >
+          <CardActionArea component={NextLinkComposed} to={`/listing/${listing.id}`} >
               <Box p={2}>
-                  <Typography variant="h6">{data.title}</Typography>
-                  <Typography variant="body1">{data.description}</Typography>
-                  <Typography variant="body1">{data.priceInCentsPerUnit}</Typography>
+                  <Typography variant="h6">{listing.title}</Typography>
+                  <Typography variant="body1">{listing.description}</Typography>
+                  <Typography variant="body1">{listing.priceInCentsPerUnit}</Typography>
               </Box>
           </CardActionArea>
       </Card>

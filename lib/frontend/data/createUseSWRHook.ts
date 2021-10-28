@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { fetcher } from "./helpers";
-import { ParsedUrlQuery } from "querystring";
+import { NextRouter } from 'next/router';
 
 // `query` represents a Next.js router.query
 // The ParsedUrlQuery type comes from node.js standard library and is what Next.js uses for router.query type
@@ -12,21 +12,21 @@ import { ParsedUrlQuery } from "querystring";
 // This allows us to gracefully handle cases in next.js (like clientside 1st render before route exists)
 // where this code may be called but route param/slug does not yet exist.
 // We can return `null` for the key value and SWR will know to not yet execute an AJAX request to the API to get data.
-export type GetSWRKeyFromQuery = (query?: ParsedUrlQuery) => string|null
+export type GetSWRKey = (router?: NextRouter) => string|null
 
-export type UseSWRHook<APIResponseType> = (query?: ParsedUrlQuery) => { data: APIResponseType|undefined, error: Error|undefined }
+export type UseSWRHook<APIResponseType> = (router?: NextRouter) => { data: APIResponseType|undefined, error: Error|undefined }
 
 export interface APIResource<APIResponseType> {
-    getSWRKeyFromQuery: GetSWRKeyFromQuery;
+    getSWRKey: GetSWRKey;
     // path/route for the "view" page - the URL associated w/the Page displayed in the browser
     // Next.js router.pathname
     pageViewPath: string;
     useSWRHook: UseSWRHook<APIResponseType>;
 }
 
-export default function createUseSWRHook<APIResponseType>(getSWRKeyFromQuery: GetSWRKeyFromQuery) {
-    return function(query?: ParsedUrlQuery) {
-        const key = getSWRKeyFromQuery(query)
+export default function createUseSWRHook<APIResponseType>(getSWRKey: GetSWRKey) {
+    return function(router?: NextRouter) {
+        const key = getSWRKey(router)
         const { data, error } = useSWR<APIResponseType, Error>(key, fetcher)
         return {
             data,

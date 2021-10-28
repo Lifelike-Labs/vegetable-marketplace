@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Loader from "./Loader";
-import ErrorHandler from "./ErrorHandler";
+import Loader from "../common/Loader";
+import ErrorHandler from "../common/ErrorHandler";
 import { APIResource } from "../../lib/frontend/data/createUseSWRHook";
 
 /**
@@ -14,18 +14,19 @@ import { APIResource } from "../../lib/frontend/data/createUseSWRHook";
  * gracefully & correctly request and render data.
  */
 
-// TODO: Properly type `useDataHook`
 // TODO: Properly type props for WrappedComponent
 export default function connectToAPI(WrappedComponent: React.ComponentType<any>, resource: APIResource<any>) {
     // TODO: Correctly type props. Main thing is we *must* pass in Next.js router
-    function ConnectedComponent() {
-        // TODO: Break all this router logic out into something we pass in
-        // so its not hardcoded we are not bound to use the Next.js router
-        // to get data we need to build api route/get swr key
+    function ConnectedComponent(props: any) {
+        // NOTE: We could pass `router` or `query` in as props to ConnectedComponent if desired
+        // Would make testing easier
         const router = useRouter()
-        const { query } = router
 
-        const { data, error } = resource.useSWRHook(query)
+        // Allow for `router` to be passed in manually as a prop
+        // if for some special case we wanted to mock the Next.js router
+        const desiredRouter = props.router ? props.router : router
+
+        const { data, error } = resource.useSWRHook(router)
 
         if (!data && !error) return <Loader />
         if (error) return <ErrorHandler error={error} />
@@ -33,7 +34,7 @@ export default function connectToAPI(WrappedComponent: React.ComponentType<any>,
         // that `data` will always exist when `data` is passed as a prop into <WrappedComponent/>
         if (!data) return <Loader />
 
-        return <WrappedComponent data={data}/>
+        return <WrappedComponent data={data} {...props} />
     }
 
     return ConnectedComponent;

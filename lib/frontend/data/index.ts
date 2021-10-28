@@ -34,29 +34,37 @@ export function useCreateListing() {
   return { createListing }
 }
 
+
+
 /***
- * APIResource Global Utilities
+ * NOT CURRENTLY USED
+ * An example of how we could programmatically connect our frontend/client Page routes
+ * to Page API routes.
  */
 
-const allPageAPIViews = [ListingAPIResource]
+const allAPIResources = [
+  ListingAPIResource,
+]
 
-interface PageAPIViewPathMap {
+/**
+ * Map between a Page Route to an API Route. Example:
+ * {
+ *     "/listing/[id]": ListingResource,
+ * }
+ *
+ */
+interface PageRouteToAPIResourceMap {
   [key: string]: APIResource<any>
 }
 
 /**
- * Create object for APIViews w/view paths for keys. Example:
- * {
- *     "/listing/[id]": ListingResource,
- * }
+ * Generates a mapping from an array of APIResources.
  */
-const pageAPIViewPathMap: PageAPIViewPathMap = allPageAPIViews.reduce((acc, p) => {
-  return {
-    ...acc,
-    [p.pageViewPath]: p,
-  } as PageAPIViewPathMap
-}, {})
-
-export function getPageAPIView(router: NextRouter) {
-  return pageAPIViewPathMap[router.pathname]
+function createRouteToAPIResourceMap(resources: Array<APIResource<any>>) {
+  return resources.reduce((acc, p) => {
+    return {
+      ...acc,
+      [p.pageViewPath]: p,
+    } as PageRouteToAPIResourceMap
+  }, {})
 }

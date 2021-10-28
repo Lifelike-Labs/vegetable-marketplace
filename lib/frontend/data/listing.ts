@@ -1,18 +1,21 @@
-import createUseSWRHook, { APIResource, GetSWRKeyFromQuery, UseSWRHook } from './createUseSWRHook'
+import createUseSWRHook, { APIResource, GetSWRKey, UseSWRHook } from './createUseSWRHook'
 import { Listing } from '.prisma/client'
 
-const getSWRKeyFromQuery: GetSWRKeyFromQuery = (query?) => {
-  if (!query) return null
-  const { id } = query
+// This is where the critical logic is
+const getListingAPIRoute: GetSWRKey = (router?) => {
+  if (!router) return null
+  const id = router?.query?.id
+
   if (!id) return null
   return `/api/listings/${id}`
 }
 
-export const useListing: UseSWRHook<Listing> = createUseSWRHook<Listing>(getSWRKeyFromQuery)
+const useListing: UseSWRHook<Listing> = createUseSWRHook<Listing>(getListingAPIRoute)
 
 export const ListingAPIResource: APIResource<Listing> = {
-  getSWRKeyFromQuery,
+  getSWRKey: getListingAPIRoute,
+  // Not currently used, but an example of how we could programmatically connect
+  // our frontend page routes to our Page API routes if desired
   pageViewPath: '/listing/[id]',
   useSWRHook: useListing,
 }
-
