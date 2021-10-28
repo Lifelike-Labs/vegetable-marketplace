@@ -1,8 +1,8 @@
-import { PageAPIView } from './createUseDataHook'
+import { APIResource } from './createUseDataHook'
 import { NextRouter } from "next/router";
 
-export const ListingResource: PageAPIView<Listing> = {
-  getPageAPIRoute: (listingId) => (listingId ? `/api/listings/${listingId}` : null),
+export const ListingResource: APIResource<Listing> = {
+  getAPIRoute: (listingId) => (listingId ? `/api/listings/${listingId}` : null),
   pageViewPath: '/listing/[id]',
   queryParamKeys: ['id'],
 }
@@ -10,7 +10,7 @@ export const ListingResource: PageAPIView<Listing> = {
 const allPageAPIViews = [ListingResource]
 
 interface PageAPIViewPathMap {
-  [key: string]: PageAPIView<any>
+  [key: string]: APIResource<any>
 }
 
 /**

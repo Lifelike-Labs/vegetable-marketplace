@@ -1,7 +1,7 @@
 import { Listing } from '.prisma/client'
 import useSWR, { useSWRConfig } from 'swr'
 import { creater, fetcher } from './helpers'
-import createUseDataHook, { PageAPIView } from "./createUseDataHook";
+import createUseDataHook, { APIResource } from "./createUseDataHook";
 import { ListingResource } from "./pageAPIViews";
 
 export const useListing = createUseDataHook(ListingResource)

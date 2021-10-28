@@ -6,11 +6,11 @@ import { ParsedUrlQuery } from "querystring";
 // For non-slug routes function can always return the route path as string
 type GetAPIRoute = (slug: string|null|undefined) => string|null
 
-export interface PageAPIView<APIResponseType> {
+export interface APIResource<APIResponseType> {
     // getPageAPIRoute is a method so we can implement SWR conditional fetching - see https://swr.vercel.app/docs/conditional-fetching
     // This allows us to gracefully handle cases in next.js (like clientside 1st render before route exists)
     // where this code may be called but route param/slug does not yet exist.
-    getPageAPIRoute: GetAPIRoute;
+    getAPIRoute: GetAPIRoute;
     // path/route for the "view" page - the URL associated w/the Page displayed in the browser
     // Next.js router.pathname
     pageViewPath: string;
@@ -21,10 +21,10 @@ export interface PageAPIView<APIResponseType> {
     queryParamKeys: string[];
 }
 
-export default function createUseDataHook<APIResponseType>(resource: PageAPIView<APIResponseType>) {
+export default function createUseDataHook<APIResponseType>(resource: APIResource<APIResponseType>) {
     return function(slug?: string|null) {
         // SWR key is same as our Next.js Page API route
-        const key = resource.getPageAPIRoute(slug)
+        const key = resource.getAPIRoute(slug)
         const { data, error } = useSWR<APIResponseType, Error>(key, fetcher)
         return {
             data,
