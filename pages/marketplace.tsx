@@ -17,7 +17,7 @@ const Home: NextPage = () => {
       <Typography variant="h3" gutterBottom>
         Available Veggies
       </Typography>
-      <ListingList listings={data} />
+      <ListingList data={data} />
     </Box>
   )
 }

@@ -3,13 +3,13 @@ import { Stack } from '@mui/material'
 import ListingCard from './ListingCard'
 
 interface Props {
-  listings: Listing[] | undefined
+  data: Listing[] | undefined
 }
 
-export default function ListingList({ listings }: Props) {
+export default function ListingList({ data }: Props) {
   return (
     <Stack spacing={2}>
-      {listings && listings.map((listing) => <ListingCard key={listing.id} listing={listing} />)}
+      {data && data.map((listing) => <ListingCard key={listing.id} listing={listing} />)}
     </Stack>
   )
 }

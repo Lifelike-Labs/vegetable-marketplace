@@ -21,7 +21,7 @@ const Dashboard: NextPage = () => {
       <Typography variant="h6" gutterBottom>
         My listings
       </Typography>
-      <ListingList listings={data} />
+      <ListingList data={data} />
       <Button sx={{ my: 4 }} component={NextLinkComposed} to={'/createListing'} variant="contained">
         Create new listing
       </Button>
