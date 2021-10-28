@@ -19,8 +19,8 @@ export type UseSWRHook<APIResponseType> = (router?: NextRouter) => { data: APIRe
  */
 export interface APIResource<APIResponseType> {
     getSWRKey: GetSWRKey;
-    // pageViewPath currently not used but here as an example.
-    // path/route for the "view" page - the URL associated w/the Page displayed in the browser
-    pageViewPath: string;
     useSWRHook: UseSWRHook<APIResponseType>;
+    // Not used but here as an example.
+    // Route the "view" page - the URL associated w/the Page displayed in the browser
+    // pageViewPath: string;
 }
