@@ -5,7 +5,7 @@ import ErrorHandler from '../components/common/ErrorHandler'
 import { NextLinkComposed } from '../components/common/Link'
 import Loader from '../components/common/Loader'
 import ListingList from '../components/listing/ListingList'
-import { useListings, useMyListings } from '../lib/frontend/data'
+import { useMyListings } from '../lib/frontend/data'
 
 const Dashboard: NextPage = () => {
     const { data, error } = useMyListings()
