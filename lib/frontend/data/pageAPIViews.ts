@@ -2,7 +2,7 @@ import { APIResource } from './createUseDataHook'
 import { NextRouter } from "next/router";
 
 export const ListingResource: APIResource<Listing> = {
-  getAPIRoute: (listingId) => (listingId ? `/api/listings/${listingId}` : null),
+  getSWRKey: (listingId) => (listingId ? `/api/listings/${listingId}` : null),
   pageViewPath: '/listing/[id]',
   queryParamKeys: ['id'],
 }
