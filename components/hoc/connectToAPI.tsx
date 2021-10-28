@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import Loader from "../common/Loader";
 import ErrorHandler from "../common/ErrorHandler";
-import { APIResource } from "../../lib/frontend/data/createUseSWRHook";
+import { APIResource } from '../../lib/frontend/data/apiResource';
 
 /**
  * This is a function which creates a higher-order component

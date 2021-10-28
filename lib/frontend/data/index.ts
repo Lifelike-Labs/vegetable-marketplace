@@ -1,9 +1,9 @@
 import { Listing } from '.prisma/client'
 import { NextRouter } from 'next/router'
 import useSWR, { useSWRConfig } from 'swr'
-import { APIResource } from './createUseSWRHook'
 import { creater, fetcher } from './helpers'
 import { ListingAPIResource } from './listing'
+import { APIResource } from './apiResource';
 
 export function useListings() {
   const { data, error } = useSWR<Listing[], Error>(`/api/listings`, fetcher)

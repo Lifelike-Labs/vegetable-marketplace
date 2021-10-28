@@ -1,5 +1,6 @@
-import createUseSWRHook, { APIResource, GetSWRKey, UseSWRHook } from './createUseSWRHook'
+import createUseSWRHook from './createUseSWRHook'
 import { Listing } from '.prisma/client'
+import { APIResource, GetSWRKey, UseSWRHook } from './apiResource';
 
 // This is where the critical logic is
 const getListingAPIRoute: GetSWRKey = (router?) => {
