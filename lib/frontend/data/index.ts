@@ -1,10 +1,9 @@
 import { Listing } from '.prisma/client'
+import { NextRouter } from 'next/router'
 import useSWR, { useSWRConfig } from 'swr'
+import { APIResource } from './createUseSWRHook'
 import { creater, fetcher } from './helpers'
-import createUseDataHook, { APIResource } from "./createUseDataHook";
-import { ListingResource } from "./pageAPIViews";
-
-export const useListing = createUseDataHook(ListingResource)
+import { ListingAPIResource } from './listing'
 
 export function useListings() {
   const { data, error } = useSWR<Listing[], Error>(`/api/listings`, fetcher)
@@ -33,4 +32,31 @@ export function useCreateListing() {
     return response
   }
   return { createListing }
+}
+
+/***
+ * APIResource Global Utilities
+ */
+
+const allPageAPIViews = [ListingAPIResource]
+
+interface PageAPIViewPathMap {
+  [key: string]: APIResource<any>
+}
+
+/**
+ * Create object for APIViews w/view paths for keys. Example:
+ * {
+ *     "/listing/[id]": ListingResource,
+ * }
+ */
+const pageAPIViewPathMap: PageAPIViewPathMap = allPageAPIViews.reduce((acc, p) => {
+  return {
+    ...acc,
+    [p.pageViewPath]: p,
+  } as PageAPIViewPathMap
+}, {})
+
+export function getPageAPIView(router: NextRouter) {
+  return pageAPIViewPathMap[router.pathname]
 }

@@ -2,23 +2,21 @@ import { useRouter } from 'next/router'
 import { Box } from '@mui/system'
 import type { NextPage } from 'next'
 import ListingCard from "../../components/listing/ListingCard";
-import { useListing } from "../../lib/frontend/data";
 import ShowLoadingErrorMessages from "../../components/common/ShowLoadingErrorMessages";
+import { useListing } from '../../lib/frontend/data/listing';
 
 const Listing: NextPage = () => {
     const router = useRouter()
+    const { query } = router
 
-    // If router not created (because its clientside first render or any other next.js-related reason)
-    // we need to pass null to SWR so that it fetches conditionally.
-    const id  = router.query.id as string | null
-    const { data, error } = useListing(id)
+    const { data, error } = useListing(query)
 
     console.log('pathname ', router.pathname)
     console.log('query ', router.query)
     return (
         <ShowLoadingErrorMessages hasData={!!data} error={error} >
             <Box m={4}>
-                <ListingCard listing={data} />
+                <ListingCard data={data} />
             </Box>
         </ShowLoadingErrorMessages>
     )

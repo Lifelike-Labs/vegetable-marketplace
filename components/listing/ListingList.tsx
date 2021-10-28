@@ -9,7 +9,7 @@ interface Props {
 export default function ListingList({ data }: Props) {
   return (
     <Stack spacing={2}>
-      {data && data.map((listing) => <ListingCard key={listing.id} listing={listing} />)}
+      {data && data.map((listing) => <ListingCard key={listing.id} data={listing} />)}
     </Stack>
   )
 }
