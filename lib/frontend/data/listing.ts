@@ -15,7 +15,7 @@ const getListingByIDKey: GetSWRKey = (router?) => {
   return `/api/listings/${id}`
 }
 
-export const ListingAPIResource: APIResource<Listing> = {
+export const ListingByIdAPIResource: APIResource<Listing> = {
   getSWRKey: getListingByIDKey,
   useSWRHook: createUseSWRHook<Listing>(getListingByIDKey)
   // pageViewPath: '/listing/[id]',

@@ -1,9 +1,9 @@
 import ListingCard from "../../components/listing/ListingCard";
-import { ListingAPIResource } from '../../lib/frontend/data/listing';
+import { ListingByIdAPIResource } from '../../lib/frontend/data/listing';
 import connectToAPI from '../../components/hoc/connectToAPI';
 
 const ConnectedListing = () => {
-    const ConnectedListingCard = connectToAPI(ListingCard, ListingAPIResource)
+    const ConnectedListingCard = connectToAPI(ListingCard, ListingByIdAPIResource)
     return <ConnectedListingCard/>
 }
 

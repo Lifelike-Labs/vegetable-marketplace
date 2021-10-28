@@ -1,7 +1,7 @@
 import { Listing } from '.prisma/client'
 import useSWR, { useSWRConfig } from 'swr'
 import { creater, fetcher } from './helpers'
-import { ListingAPIResource } from './listing'
+import { ListingByIdAPIResource } from './listing'
 import { APIResource } from './apiResource';
 import { ListingsAPIResource } from './listing';
 
