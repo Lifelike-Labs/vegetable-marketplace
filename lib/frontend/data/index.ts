@@ -1,17 +1,6 @@
 import { Listing } from '.prisma/client'
-import useSWR, { useSWRConfig } from 'swr'
+import { useSWRConfig } from 'swr'
 import { creater, fetcher } from './helpers'
-import { ListingAPIResource } from './listing'
-import { APIResource } from './apiResource';
-import { ListingsAPIResource } from './listings';
-
-export function useMyListings() {
-  const { data, error } = useSWR<Listing[], Error>(`/api/listings?myListings=true`, fetcher)
-  return {
-    data,
-    error,
-  }
-}
 
 export function useCreateListing() {
   const { mutate } = useSWRConfig()

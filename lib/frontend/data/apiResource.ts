@@ -26,6 +26,5 @@ export type UseSWRHook<APIResponseType, SWRKeyOptions> = (options: SWRKeyOptions
 export interface APIResource<APIResponseType, SWRKeyOptions> {
     // swrKey: SWRKey<SWRKeyOptions>
     useSWRHook: UseSWRHook<APIResponseType, SWRKeyOptions>
-    injectRouterAndIgnoreOptions?: boolean
     injectRouter?: boolean
 }

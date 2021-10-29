@@ -1,6 +1,7 @@
 import connectToAPI from '../../components/hoc/connectToAPI';
 import ListingList from './ListingList';
-import { ListingsAPIResource } from '../../lib/frontend/data/listings';
+import { ListingsAPIResource, KeyOptions } from '../../lib/frontend/data/listings';
 
-const ConnectedListingList = connectToAPI(ListingList, ListingsAPIResource)
+type ComponentProps = React.ComponentProps<typeof ListingList>
+const ConnectedListingList = connectToAPI<ComponentProps, KeyOptions >(ListingList, ListingsAPIResource)
 export default ConnectedListingList

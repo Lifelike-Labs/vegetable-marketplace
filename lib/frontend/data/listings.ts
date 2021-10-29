@@ -7,7 +7,7 @@ import createUseSWRHook from './createUseSWRHook';
  * /api/listings
  */
 
-interface KeyOptions {
+export interface KeyOptions {
     myListings?: boolean
 }
 
