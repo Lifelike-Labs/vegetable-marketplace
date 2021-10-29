@@ -33,7 +33,7 @@ export default function connectToAPI<WrappedPropTypes, KeyOptions>(WrappedCompon
     function ConnectedComponent({ options, ...props }: ConnectedProps ) {
         const router = useRouter()
 
-        // We must be sure to give `options` a default value is it may not always be passed
+        // We must be sure to give `options` a default value as it may not always be passed
         let _options = { ...options }
         if (resource.injectRouter) {
             // @ts-ignore
