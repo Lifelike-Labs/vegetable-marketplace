@@ -13,6 +13,7 @@ const Dashboard: NextPage = () => {
       <Typography variant="h6" gutterBottom>
         My listings
       </Typography>
+      { /* note that `options` prop has correct typing info for its object shape */ }
       <ConnectedListingList options={{ myListings: true }}/>
       <Button sx={{ my: 4 }} component={NextLinkComposed} to={'/createListing'} variant="contained">
         Create new listing
