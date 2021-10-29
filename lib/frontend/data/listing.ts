@@ -13,12 +13,8 @@ export interface KeyOptions {
 }
 
 const swrKey: SWRKey<KeyOptions> = ({ router }) => {
-  if (!router) return null
   const id = router?.query?.id
-
-  if (!id) return null
-
-  return `/api/listings/${id}`
+  return id ? `/api/listings/${id}` : null
 }
 
 export const ListingAPIResource: APIResource<Listing, KeyOptions> = {
