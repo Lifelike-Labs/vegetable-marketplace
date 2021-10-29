@@ -4,6 +4,8 @@ import ErrorHandler from "../common/ErrorHandler";
 import { APIResource } from '../../lib/frontend/data/apiResource';
 import React from 'react';
 import { useRouter } from 'next/router';
+import ListingCard from '../listing/ListingCard';
+import { KeyOptions, ListingAPIResource } from '../../lib/frontend/data/listing';
 
 /**
  * This is a function which creates a higher-order component
@@ -17,13 +19,23 @@ import { useRouter } from 'next/router';
 
 export default function connectToAPI<WrappedPropTypes, KeyOptions>(WrappedComponent: React.ComponentType<WrappedPropTypes>, resource: APIResource<any, KeyOptions>) {
 
-    // TODO: This typescript type info is not working. Currently we lose the type info for WrappedComponent
-    // Need to Properly type props for WrappedComponent. Maybe refactor this to use child components instead of being an HOC
-    // IMPORTANT: We must be sure to give `options` a default value is it may not always be passed
-    // TODO: Correctly type props.
-    function ConnectedComponent({ options, ...props }: { options: KeyOptions, props: WrappedPropTypes}) {
+
+    // All of the Typescript stuff should result in the text editor correctly providing
+    // Type feedback for the connected component in question when editing.
+    interface Options {
+        options: KeyOptions
+    }
+
+    // Adds `options` on as a prop to the type info for the connected component, AND,
+    // ensures that it will have the desired shape.
+    // we inject the `data` prop here so we don't want it to be in prop type info
+    // for the connected component
+    type ConnectedProps = Omit<WrappedPropTypes, "data"> & Options
+
+    function ConnectedComponent({ options, ...props }: ConnectedProps ) {
         const router = useRouter()
 
+        // We must be sure to give `options` a default value is it may not always be passed
         let _options = { ...options }
         if (resource.injectRouter) {
             // @ts-ignore
@@ -38,11 +50,9 @@ export default function connectToAPI<WrappedPropTypes, KeyOptions>(WrappedCompon
         // that `data` will always exist when `data` is passed as a prop into <WrappedComponent/>
         if (!data) return <Loader />
 
-        // `data` must always be a prop for components we use this function on
-        const _props = { ...props, data }
 
         // @ts-ignore
-        return <WrappedComponent {..._props} />
+        return <WrappedComponent data={data} {...props} />
     }
 
     ConnectedComponent.propTypes = {

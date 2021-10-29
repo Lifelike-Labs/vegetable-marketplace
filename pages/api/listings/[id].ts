@@ -1,6 +1,6 @@
 import { withApiAuthRequired } from '@auth0/nextjs-auth0'
-import { handleGetListingById } from '../../../lib/apiHelpers/listings/get'
 import { getUserId } from '../../../lib/domains/user/helpers'
+import { getListingById } from '../../../lib/domains/listing/api';
 
 export default withApiAuthRequired(async function handle(req, res) {
   const userId = getUserId(req, res)
@@ -21,7 +21,7 @@ export default withApiAuthRequired(async function handle(req, res) {
   // like this one.
   switch (method) {
     case 'GET': {
-      const listings = await handleGetListingById(listingId, query)
+      const listings = await getListingById(listingId)
       res.status(200).json(listings)
       break
     }

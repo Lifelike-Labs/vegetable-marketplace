@@ -1,5 +1,5 @@
 import { Listing } from '.prisma/client'
-import { getListingById, listListings, listMyListings } from '../../domains/listing/api'
+import { listListings, listMyListings } from '../../domains/listing/api'
 
 interface Query {
   [key: string]: string | string[]
@@ -11,8 +11,4 @@ export async function handleGetListings(userId: string, query: Query): Promise<L
   }
 
   return await listListings()
-}
-
-export async function handleGetListingById(id: string, query: Query): Promise<Listing | null> {
-  return await getListingById(id)
 }
