@@ -1,18 +1,10 @@
 import { Button, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import type { NextPage } from 'next'
-import ErrorHandler from '../components/common/ErrorHandler'
 import { NextLinkComposed } from '../components/common/Link'
-import Loader from '../components/common/Loader'
-import ListingList from '../components/listing/ListingList'
-import { useMyListings } from '../lib/frontend/data'
+import ConnectedListingList from '../components/listing/ConnectedListingList';
 
 const Dashboard: NextPage = () => {
-    const { data, error } = useMyListings()
-    if (!data && !error) return <Loader />
-    if (error) return <ErrorHandler error={error} />
-    if (!data) return <Loader />
-
     return (
     <Box m={4}>
       <Typography variant="h3" gutterBottom>
@@ -21,7 +13,7 @@ const Dashboard: NextPage = () => {
       <Typography variant="h6" gutterBottom>
         My listings
       </Typography>
-      <ListingList data={data} />
+      <ConnectedListingList options={{ myListings: true }}/>
       <Button sx={{ my: 4 }} component={NextLinkComposed} to={'/createListing'} variant="contained">
         Create new listing
       </Button>

@@ -1,12 +1,17 @@
 import { NextRouter } from 'next/router';
 
-// We use a function to get the key so that we can implement SWR conditional fetching - see
-// https://swr.vercel.app/docs/conditional-fetching
-// This allows us to gracefully handle cases in next.js (like clientside 1st render before route exists)
-// where this code may be called but route param/slug does not yet exist.
-// We can return `null` for the key value and SWR will know to not yet execute an AJAX request to the API to get data.
-export type GetSWRKey = (router?: NextRouter) => string | null
-export type UseSWRHook<APIResponseType> = (router?: NextRouter) => { data: APIResponseType | undefined, error: Error | undefined }
+/**
+ * We use a function to get the SWR key so that we can implement SWR conditional fetching.
+ * If key is null swr does not make API call; this is a feature
+ * See https://swr.vercel.app/docs/conditional-fetching
+
+ * This allows us to gracefully handle cases in next.js (like clientside 1st render before route exists)
+ * where this code may be called but route param/slug does not yet exist.
+ * We can return `null` for the key value and SWR will know to not yet execute an AJAX request to the API to get data.
+ **/
+
+export type SWRKey<SWRKeyOptions> = (option: SWRKeyOptions) => string | null
+export type UseSWRHook<APIResponseType, SWRKeyOptions> = (options: SWRKeyOptions) => { data: APIResponseType | undefined, error: Error | undefined }
 
 /**
  * Represents some resource accessible by API.
@@ -17,10 +22,10 @@ export type UseSWRHook<APIResponseType> = (router?: NextRouter) => { data: APIRe
  *
  * Use in conjunction with createUseSWRHook()
  */
-export interface APIResource<APIResponseType> {
-    getSWRKey: GetSWRKey;
-    useSWRHook: UseSWRHook<APIResponseType>;
-    // Not used but here as an example.
-    // Route the "view" page - the URL associated w/the Page displayed in the browser
-    // pageViewPath: string;
+
+export interface APIResource<APIResponseType, SWRKeyOptions> {
+    // swrKey: SWRKey<SWRKeyOptions>
+    useSWRHook: UseSWRHook<APIResponseType, SWRKeyOptions>
+    injectRouterAndIgnoreOptions?: boolean
+    injectRouter?: boolean
 }

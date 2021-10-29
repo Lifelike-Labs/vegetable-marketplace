@@ -1,8 +1,9 @@
-import React from "react";
-import { useRouter } from "next/router";
+import PropTypes from 'prop-types'
 import Loader from "../common/Loader";
 import ErrorHandler from "../common/ErrorHandler";
 import { APIResource } from '../../lib/frontend/data/apiResource';
+import React from 'react';
+import { useRouter } from 'next/router';
 
 /**
  * This is a function which creates a higher-order component
@@ -14,19 +15,23 @@ import { APIResource } from '../../lib/frontend/data/apiResource';
  * gracefully & correctly request and render data.
  */
 
-// TODO: Properly type props for WrappedComponent
-export default function connectToAPI(WrappedComponent: React.ComponentType<any>, resource: APIResource<any>) {
-    // TODO: Correctly type props. Main thing is we *must* pass in Next.js router
-    function ConnectedComponent(props: any) {
-        // NOTE: We could pass `router` or `query` in as props to ConnectedComponent if desired
-        // Would make testing easier
+export default function connectToAPI<KeyOptions>(WrappedComponent: React.ComponentType<any>, resource: APIResource<any, KeyOptions>) {
+
+    // TODO: This typescript type info is not working. Currently we lose the type info for WrappedComponent
+    // Need to Properly type props for WrappedComponent. Maybe refactor this to use child components instead of being an HOC
+    type WrappedComponentProps = React.ComponentProps<typeof WrappedComponent>
+    type ConnectedComponentProps = WrappedComponentProps & KeyOptions
+
+    // IMPORTANT: We must be sure to give `options` a default value is it may not always be passed
+    // TODO: Correctly type props.
+    function ConnectedComponent({ options  = {}, ...props }: ConnectedComponentProps) {
         const router = useRouter()
 
-        // Allow for `router` to be passed in manually as a prop
-        // if for some special case we wanted to mock the Next.js router
-        const desiredRouter = props.router ? props.router : router
+        if (resource.injectRouter) {
+            options.router = router
+        }
 
-        const { data, error } = resource.useSWRHook(router)
+        const { data, error } = resource.useSWRHook(options)
 
         if (!data && !error) return <Loader />
         if (error) return <ErrorHandler error={error} />
@@ -35,6 +40,10 @@ export default function connectToAPI(WrappedComponent: React.ComponentType<any>,
         if (!data) return <Loader />
 
         return <WrappedComponent data={data} {...props} />
+    }
+
+    ConnectedComponent.propTypes = {
+        options: PropTypes.object
     }
 
     return ConnectedComponent;

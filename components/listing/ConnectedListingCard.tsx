@@ -1,10 +1,6 @@
 import ListingCard from "../../components/listing/ListingCard";
-import { ListingByIdAPIResource } from '../../lib/frontend/data/listing';
+import { KeyOptions, ListingAPIResource } from '../../lib/frontend/data/listing';
 import connectToAPI from '../../components/hoc/connectToAPI';
 
-const ConnectedListing = () => {
-    const ConnectedListingCard = connectToAPI(ListingCard, ListingByIdAPIResource)
-    return <ConnectedListingCard/>
-}
-
+const ConnectedListing = connectToAPI<KeyOptions>(ListingCard, ListingAPIResource)
 export default ConnectedListing

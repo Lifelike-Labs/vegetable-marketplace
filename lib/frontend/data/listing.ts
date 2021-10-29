@@ -1,35 +1,27 @@
-import createUseSWRHook from './createUseSWRHook'
 import { Listing } from '.prisma/client'
-import { APIResource, GetSWRKey, UseSWRHook } from './apiResource';
+import { NextRouter } from 'next/router';
+import { APIResource, SWRKey } from './apiResource';
+import createUseSWRHook from './createUseSWRHook'
 
 /**
  * Listing
  * api/listing/[id]
  */
 
-const getListingByIDKey: GetSWRKey = (router?) => {
+export interface KeyOptions {
+  router: NextRouter
+}
+
+const swrKey: SWRKey<KeyOptions> = ({ router }) => {
   if (!router) return null
   const id = router?.query?.id
 
   if (!id) return null
+
   return `/api/listings/${id}`
 }
 
-export const ListingByIdAPIResource: APIResource<Listing> = {
-  getSWRKey: getListingByIDKey,
-  useSWRHook: createUseSWRHook<Listing>(getListingByIDKey)
-  // pageViewPath: '/listing/[id]',
-}
-
-/**
- * Listings
- * /api/listings
- */
-
-const getListingsKey: GetSWRKey = () => '/api/listings/'
-
-export const ListingsAPIResource: APIResource<Listing[]> = {
-  getSWRKey: getListingsKey,
-  useSWRHook: createUseSWRHook<Listing[]>(getListingsKey),
-  // pageViewPath: '/listings',
+export const ListingAPIResource: APIResource<Listing, KeyOptions> = {
+  useSWRHook: createUseSWRHook<Listing, KeyOptions>(swrKey),
+  injectRouter: true,
 }

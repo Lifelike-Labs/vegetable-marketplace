@@ -1,10 +1,6 @@
 import connectToAPI from '../../components/hoc/connectToAPI';
-import { ListingsAPIResource } from '../../lib/frontend/data/listing';
 import ListingList from './ListingList';
+import { ListingsAPIResource } from '../../lib/frontend/data/listings';
 
-const ConnectedListingList = () => {
-    const ConnectedComponent = connectToAPI(ListingList, ListingsAPIResource)
-    return <ConnectedComponent/>
-}
-
+const ConnectedListingList = connectToAPI(ListingList, ListingsAPIResource)
 export default ConnectedListingList
