@@ -4,8 +4,6 @@ import ErrorHandler from "../common/ErrorHandler";
 import { APIResource } from '../../lib/frontend/data/apiResource';
 import React from 'react';
 import { useRouter } from 'next/router';
-import ListingCard from '../listing/ListingCard';
-import { KeyOptions, ListingAPIResource } from '../../lib/frontend/data/listing';
 
 /**
  * This is a function which creates a higher-order component
