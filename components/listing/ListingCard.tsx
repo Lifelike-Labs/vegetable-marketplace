@@ -13,7 +13,6 @@ export default function ListingCard({ listing }: Props) {
       <Box p={2}>
         <Typography variant="h6">{listing.title}</Typography>
         <Typography variant="body1">{listing.description}</Typography>
-        <Typography variant="body1">{listing.priceInCentsPerUnit}</Typography>
       </Box>
     </Card>
   )
