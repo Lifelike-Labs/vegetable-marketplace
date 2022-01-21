@@ -1,5 +1,4 @@
-import { Button, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box, Button, Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import ErrorHanlder from '../components/common/ErrorHandler'
 import { NextLinkComposed } from '../components/common/Link'

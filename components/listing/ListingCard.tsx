@@ -1,6 +1,5 @@
 import { Listing } from '.prisma/client'
-import { Card, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box, Card, Typography } from '@mui/material'
 
 interface Props {
   listing: Listing
