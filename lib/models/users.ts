@@ -9,35 +9,39 @@ export class Users {
     this.prisma = prisma['user']
   }
 
-  async syncSessionWithUser(session: Session): Promise<Session> {
-    /* Tries to find an existing user from session authId (Auth0 session.user.sub). 
-    Will create new user in the app DB if one does not exist and link email and authId properties.
-    Note: We shouldn't need to validate anything here because we can trust the Auth0 Session! */
+  async verifyOrCreateUser(authId: string, email: string): Promise<User> {
+    /* Tries to find an existing user from Auth0 session authId. 
+    Will create new user in the app DB if one does not exist and link email and authId properties. 
+    Note: we could add validation here, but we are retrieving email from Aut0 Session which we can trust */
     try {
       let user: User | null
-      const authId = session.user.sub
       user = await this.prisma.findUnique({
         where: { authId },
       })
       if (!user) {
-        const email = session.user.email
         user = await this.prisma.create({
           data: { authId, email },
         })
       }
-      // Add the userId to the session before returning it so we can easily access it in the app
-      session.user.userId = user.id
-      return session
+      return user
     } catch (error) {
-      throw new Error(`Error while processing session: ${error}`)
+      throw new Error(`Error while signing in user: ${error}`)
     }
   }
 
-  getUserIdFromSession(session: Session | null | undefined): string | undefined {
-    const userId = session?.user?.userId
-    if (userId) {
-      return userId
-    } else return undefined
+  getUserDataFromSession(session: Session) {
+    // Helper method for decomposing useful attributes from Auth0 Session 
+    return { 
+      authId: session.user.sub, 
+      email: session.user.email,
+      userId: session.user.userId, 
+    }
+  }
+  
+  attachUserIdToSession(userId: string, session: Session): Session {
+    // Helper method for attaching userId to Auth0 Session
+    session.user.userId = userId
+    return session
   }
 
 }

@@ -4,7 +4,9 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 const afterCallback = async (req: NextApiRequest, res: NextApiResponse, session: Session) => {
   const users = new Users()
-  const sessionWithUserData = await users.syncSessionWithUser(session)
+  const { authId, email } = users.getUserDataFromSession(session)
+  const user = await users.verifyOrCreateUser(authId, email)
+  const sessionWithUserData = users.attachUserIdToSession(user.id, session)
   return sessionWithUserData
 }
 

@@ -5,11 +5,12 @@ import { Users } from 'lib/models/users'
 export default withApiAuthRequired(async function handle(req, res) {
   const session = getSession(req, res)
   const users = new Users()
-  const userId = users.getUserIdFromSession(session)
-  if (!userId) {
+  if (!session) {
     res.status(401).end
     return
   }
+
+  const { userId } = users.getUserDataFromSession(session)
   const { method, query } = req
   const listings = new Listings()
 
@@ -22,7 +23,6 @@ export default withApiAuthRequired(async function handle(req, res) {
         const response = await listings.listListings()
         res.status(200).json(response)
       }
-      
       break
     }
 
