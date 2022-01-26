@@ -1,6 +1,6 @@
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
-import { Listings } from 'lib/models/listings'
-import { Users } from 'lib/models/users'
+import { Listings } from 'backend/models/listings'
+import { Users } from 'backend/models/users'
 
 export default withApiAuthRequired(async function handle(req, res) {
   const session = getSession(req, res)

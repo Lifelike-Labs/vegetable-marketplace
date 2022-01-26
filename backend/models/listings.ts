@@ -1,5 +1,5 @@
 import { PrismaClient, Listing } from '@prisma/client'
-import { prisma } from 'lib/db/prisma'
+import { prisma } from 'backend/db/prisma'
 
 type CreateListingPayload = {
   title: string

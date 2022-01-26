@@ -4,9 +4,9 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
 import { AppProps } from 'next/app'
 import { SnackbarProvider } from 'notistack'
-import Layout from '../components/common/Layout'
-import createEmotionCache from '../lib/frontend/mui/createEmotionCache'
-import theme from '../lib/frontend/mui/theme'
+import Layout from 'frontend/components/common/Layout'
+import createEmotionCache from 'frontend/styles/createEmotionCache'
+import theme from 'frontend/styles/theme'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()

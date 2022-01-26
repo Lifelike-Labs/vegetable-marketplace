@@ -1,10 +1,10 @@
 import { Box, Button, Typography } from '@mui/material'
 import type { NextPage } from 'next'
-import ErrorHanlder from '../components/common/ErrorHandler'
-import { NextLinkComposed } from '../components/common/Link'
-import Loader from '../components/common/Loader'
-import ListingList from '../components/listing/ListingList'
-import { useMyListings } from '../lib/frontend/data'
+import ErrorHanlder from 'frontend/components/common/ErrorHandler'
+import { NextLinkComposed } from 'frontend/components/common/Link'
+import Loader from 'frontend/components/common/Loader'
+import ListingList from 'frontend/components/listing/ListingList'
+import { useMyListings } from 'frontend/data'
 
 const Dashboard: NextPage = () => {
   const { myListings, isLoading, isError } = useMyListings()

@@ -1,6 +1,6 @@
 import { Session } from '@auth0/nextjs-auth0'
 import { PrismaClient, User } from '@prisma/client'
-import { prisma } from 'lib/db/prisma'
+import { prisma } from 'backend/db/prisma'
 
 export class Users {
   private readonly prisma: PrismaClient['user']

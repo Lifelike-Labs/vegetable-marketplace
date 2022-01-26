@@ -1,5 +1,5 @@
 import { handleAuth, handleCallback, handleLogin, Session } from '@auth0/nextjs-auth0'
-import { Users } from 'lib/models/users'
+import { Users } from 'backend/models/users'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const afterCallback = async (req: NextApiRequest, res: NextApiResponse, session: Session) => {

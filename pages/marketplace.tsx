@@ -1,9 +1,9 @@
 import { Box, Typography } from '@mui/material'
 import type { NextPage } from 'next'
-import ErrorHanlder from '../components/common/ErrorHandler'
-import Loader from '../components/common/Loader'
-import ListingList from '../components/listing/ListingList'
-import { useListings } from '../lib/frontend/data'
+import ErrorHanlder from 'frontend/components/common/ErrorHandler'
+import Loader from 'frontend/components/common/Loader'
+import ListingList from 'frontend/components/listing/ListingList'
+import { useListings } from 'frontend/data'
 
 const Home: NextPage = () => {
   const { listings, isLoading, isError } = useListings()
