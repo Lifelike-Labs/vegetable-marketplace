@@ -3,8 +3,8 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useState } from 'react'
-import { NextLinkComposed } from '../components/common/Link'
-import { useCreateListing } from '../lib/frontend/data'
+import { NextLinkComposed } from 'frontend/components/common/Link'
+import { useCreateListing } from 'frontend/data'
 
 const Dashboard: NextPage = () => {
   const { createListing } = useCreateListing()

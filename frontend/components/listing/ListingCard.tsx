@@ -6,7 +6,6 @@ interface Props {
 }
 
 export default function ListingCard({ listing }: Props) {
-  console.log(listing)
   return (
     <Card>
       <Box p={2}>

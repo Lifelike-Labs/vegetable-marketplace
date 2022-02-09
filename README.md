@@ -40,21 +40,22 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
 ## Project Structure
 
 ### Next.js Basics
 The basic structure of the repo follows the standard structure of a [Next.js](https://nextjs.org/docs) project.
 
-### Lib
-`lib` is where most _non-react-component_ code lives. There is an onion architecture layered in the following way (starting from center and going out)
+### Structure Overview
+Most code is split between 3 directories, `pages`, `backend`, and `frontend`: 
 
-* The `db` directory contains the [Prisma](https://www.prisma.io/) Schema file which is used for generating ORM, defining the DB tables, etc.
+`pages` is a standard Next.js structure which hosts all of the _pages_ in the app. Pages can be react routes or API endpoints. Practically, you can think of these files as entry points to the app (either URLs a user would visit or API URLs that would be used by frontend code) Files in `pages/api` directory include all the [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages. 
 
-* The `domains` directory contains methods pertaining to core business logic and services. There are no references to Next.js API routes, react components, etc. Methods in `domains` interface with the Prisma ORM to read and write to the database and [Nextjs-auth0](https://github.com/auth0/nextjs-auth0) sessions to extract user data (and in the future other 3rd party services). (Note: Because Next.js blurs the line between front and back-end, methods in this directory could be called directly from Next.js Pages via methods like [`getStaticProps`](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation), when data does not require authentication)
+`backend` contains code that is used in the backend of the app (at the top level, mostly APIs in `pages/api`). 
+* `backend/db` contains the [Prisma](https://www.prisma.io/) Schema file which is used for defining the DB tables and generating an ORM-like "Prisma client". 
+* `backend/models` contains classes related to key entities in the app. These classes wrap the Prisma client so we can access entities in the DB, but they are also a good place to put business logic, validation, etc.
 
-* The `apiHelpers` directory contains methods for handling Next.js API Route requests. It is responsible for mapping requests from Next.js API routes (found in `pages/api/`) to core logic in `domains`. 
-
-* The `frontend` directory hosts code exclusively used in the front end. The `data` directory contains methods _used within the react app_ for interacting with Next.js APIs (and possibly other data sources in the future). SWR is used for querying and caching data. The `mui` directory contains some helper functions and the UI Theme file for [MUI](https://mui.com/), which is the library we use for React UI components and styling
-
+`frontend` contains code that is used by the frontend of the app (at the top level, mostly non-API `pages`):
+* `frontend/components` contains, as you might guess, react components. 
+* `frontend/data` contains client code that uses [SWR](https://swr.vercel.app/) for fetching and managing data in the front end. 
+* `frontend/styles` contains some configuration code used by [MUI](https://mui.com/) for theming a baseline component library.  
