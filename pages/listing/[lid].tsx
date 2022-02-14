@@ -20,9 +20,10 @@ const Home: NextPage = () => {
   return (
     <Box m={4}>
       <Typography variant="h3" gutterBottom>
-        Detailed listing page for {lid}
+        Listing's Detail Page
       </Typography>
       <ListingDetail listing={listing} />
+
     </Box>
   )
 }
