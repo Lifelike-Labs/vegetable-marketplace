@@ -23,12 +23,19 @@ export class Listings {
     const listings = await prisma.listing.findMany()
     return listings
   }
-  
+
   async listMyListings(userId: string): Promise<Listing[]> {
     const listings = await prisma.listing.findMany({
       where: { user: { id: userId } },
     })
     return listings
+  }
+
+  async getListing(listingId: string): Promise<Listing> {
+    const listing = await prisma.listing.findUnique({
+      where: { id: listingId }
+    })
+    return listing
   }
 
 }
